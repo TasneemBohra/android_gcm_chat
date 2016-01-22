@@ -5,12 +5,12 @@ package com.desidime.chat;
  */
 
 public class ChatMessage {
-    public boolean left;
+    public boolean right;
     public String message;
 
-    public ChatMessage(boolean left, String message) {
+    public ChatMessage(boolean right, String message) {
         super();
-        this.left = left;
+        this.right = right;
         this.message = message;
     }
 }

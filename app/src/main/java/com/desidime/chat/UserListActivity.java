@@ -1,6 +1,7 @@
 package com.desidime.chat;
 
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,21 +31,21 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class UserListActivity extends ListActivity {
+public class UserListActivity extends AppCompatActivity {
     private static final String TAG = "UserListActivity";
-    TextView content;
     Button refreshButton;
     private Intent intent;
     MessageSender messageSender;
     GoogleCloudMessaging gcm;
+    private  ListView mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
-        content = (TextView)findViewById(R.id.output);
-        content.setText("Select user to chat:");
+        setToolbar();
         refreshButton = (Button)findViewById(R.id.refreshButton);
+        mList = (ListView)findViewById(R.id.listView);
         intent = new Intent(this, GCMNotificationIntentService.class);
         messageSender = new MessageSender();
         gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
@@ -55,6 +57,24 @@ public class UserListActivity extends ListActivity {
                 Bundle dataBundle = new Bundle();
                 dataBundle.putString("ACTION", "USERLIST");
                 messageSender.sendMessage(dataBundle, gcm);
+            }
+        });
+
+        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // ListView Clicked item index
+                int itemPosition = position;
+
+                // ListView Clicked item value
+                String  itemValue    = (String)parent.getItemAtPosition(position);
+
+
+                Intent i = new Intent(getApplicationContext(),
+                        ChatActivity.class);
+                i.putExtra("TOUSER",itemValue);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -88,9 +108,7 @@ public class UserListActivity extends ListActivity {
         //get userlist from the intents and update the list
 
         String[] userListArr = userList.split(":");
-
         Log.d(TAG,"userListArr: "+userListArr.length+" tostr "+userListArr.toString());
-
         //remove empty strings :-)
         List<String> list = new ArrayList();
         for(String s : userListArr) {
@@ -100,51 +118,24 @@ public class UserListActivity extends ListActivity {
         }
         userListArr = list.toArray(new String[list.size()]);
 
-        ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, userListArr);
-        setListAdapter(adapter);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, userListArr);
+        mList.setAdapter(adapter);
 
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-        super.onListItemClick(l, v, position, id);
-
-        // ListView Clicked item index
-        int itemPosition     = position;
-
-        // ListView Clicked item value
-        String  itemValue    = (String) l.getItemAtPosition(position);
-
-        content.setText("User selected: " +itemValue);
 
 
-        Intent i = new Intent(getApplicationContext(),
-                ChatActivity.class);
-        i.putExtra("TOUSER",itemValue);
-        startActivity(i);
-        finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+    /**
+     * setting toolbar
+     */
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setDisplayShowHomeEnabled(true);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 }

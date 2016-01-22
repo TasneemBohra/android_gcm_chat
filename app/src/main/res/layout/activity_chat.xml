@@ -2,28 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical" >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-
-        android:layout_height="56dp"></android.support.v7.widget.Toolbar>
-
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical">
+<include layout="@layout/layout_toolbar" android:id="@+id/toolbar"/>
     <ListView
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/toolbar"
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp">
+        android:scrollbars="horizontal"
+        android:dividerHeight="10dp"
+        android:divider="@android:color/transparent"
+        android:layout_marginBottom="75dp">
     </ListView>
 
     <RelativeLayout
         android:id="@+id/form"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:padding="10dp"
         android:layout_alignParentLeft="true"
         android:orientation="vertical" >
 
@@ -31,24 +30,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:ems="10"
             android:id="@+id/chatText"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="10dp"
+            android:hint="Say Hello!"
+            android:paddingBottom="@dimen/fab_margin"
             android:layout_toLeftOf="@+id/buttonSend" />
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"
             android:id="@+id/buttonSend"
-            android:background="@color/colorAccent"
             android:layout_alignBottom="@+id/chatText"
             android:layout_alignParentRight="true"
-            android:textColor="#FFFFFF"
-            android:layout_margin="10dp"
+            app:fabSize="mini"
+            android:src="@drawable/ic_send"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 

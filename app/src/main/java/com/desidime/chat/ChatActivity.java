@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.DataSetObserver;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -28,7 +30,7 @@ public class ChatActivity extends AppCompatActivity {
         private ChatArrayAdapter chatArrayAdapter;
         private ListView listView;
         private EditText chatText;
-        private Button buttonSend;
+        private FloatingActionButton buttonSend;
 
         GoogleCloudMessaging gcm;
         Intent intent;
@@ -46,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
 
             setToolbar();
 
-            buttonSend = (Button) findViewById(R.id.buttonSend);
+            buttonSend = (FloatingActionButton) findViewById(R.id.buttonSend);
             intent = new Intent(this, GCMNotificationIntentService.class);
 
             random = new Random();
@@ -73,8 +75,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
 
-            listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-            listView.setAdapter(chatArrayAdapter);
 
             chatArrayAdapter.registerDataSetObserver(new DataSetObserver() {
                 @Override

@@ -10,6 +10,8 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ public class ChatArrayAdapter extends ArrayAdapter {
 
     @Override
     public void add(Object object) {
-        chatMessageList.add((ChatMessage)object);
+        chatMessageList.add((ChatMessage) object);
     }
 
     public   ChatArrayAdapter(Context context, int textViewResourceId) {
@@ -51,9 +53,14 @@ public class ChatArrayAdapter extends ArrayAdapter {
         ChatMessage chatMessageObj = getItem(position);
         chatText = (TextView) row.findViewById(R.id.singleMessage);
         chatText.setText(chatMessageObj.message);
-        //chatText.setBackgroundResource(chatMessageObj.left ? R.drawable.bubble_a : R.drawable.bubble_b);
-        chatText.setBackgroundResource( R.drawable.bubble_b);
-        singleMessageContainer.setGravity(chatMessageObj.left ? Gravity.LEFT : Gravity.RIGHT);
+        chatText.setBackgroundResource(chatMessageObj.right ? R.drawable.bubble_other : R.drawable.bubble_me);
+        singleMessageContainer.setGravity(chatMessageObj.right ? Gravity.RIGHT : Gravity.LEFT);
+        /*if (chatMessageObj.right) {
+            chatText.setPadding(R.dimen.padding_10, R.dimen.padding_20, R.dimen.padding_10, R.dimen.padding_10);
+        } else {
+            chatText.setPadding(R.dimen.padding_10, R.dimen.padding_10, R.dimen.padding_10, R.dimen.padding_20);
+
+        }*/
         return row;
     }
 
