@@ -54,8 +54,13 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // get user list
-                Bundle dataBundle = new Bundle();
+               /* Bundle dataBundle = new Bundle();
                 dataBundle.putString("ACTION", "USERLIST");
+                messageSender.sendMessage(dataBundle, gcm);*/
+                Bundle dataBundle = new Bundle();
+                dataBundle.putString("ACTION", "CHAT");
+                dataBundle.putString("TOUSER", "Hardik");
+                dataBundle.putString("CHATMESSAGE", "Hello Hardik, I am Tasneem");
                 messageSender.sendMessage(dataBundle, gcm);
             }
         });

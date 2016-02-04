@@ -36,7 +36,7 @@ public class MessageSender {
 
                 try {
                     Log.d(TAG, "messageid: " + id);
-                    gcm.send("559461873841@gcm.googleapis.com", id, data);
+                    gcm.send("1082737852935@gcm.googleapis.com", id, data);
                     Log.d(TAG, "After gcm.send successful.");
                 } catch (IOException e) {
                     Log.d(TAG, "Exception: " + e);
